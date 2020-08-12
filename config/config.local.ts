@@ -15,6 +15,12 @@ export default () => {
       enable:false
     }
   };
+  config.smtp = {
+    host:"smtp.qq.com",
+    port: 465,
+    user: '1781104182@qq.com', // 发送邮件的邮箱
+    pass: 'meheebojrvlbbcbh', // 授权码
+  };
   config.redis = {
     client: {
       host: '127.0.0.1',

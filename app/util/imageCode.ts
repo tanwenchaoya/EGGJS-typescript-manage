@@ -38,6 +38,6 @@ export default {
             ctx.session.captcha = null;
             throw new Error("验证码错误");
         }
-
+        ctx.session.captcha = null;
     }
 }

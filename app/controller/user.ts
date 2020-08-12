@@ -36,6 +36,7 @@ export default class UserController extends Controller {
             }
             case RegisterTypeEnum.Email:{
                 ctx.validate(EmailUserRule,data);
+                ctx.helper.verifyEmailCaptcha(data.captcha);
                 break;
             }
             case RegisterTypeEnum.Phone:{
