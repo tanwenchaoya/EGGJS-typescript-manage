@@ -9,6 +9,7 @@ export default () => {
     password:'root',
     port: 3306,
     database: 'system',
+    timezone:'+8:00' //时区为东八区
   };
   config.security = {
     csrf:{

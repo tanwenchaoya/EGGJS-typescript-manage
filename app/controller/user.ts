@@ -12,7 +12,9 @@ export default class UserController extends Controller {
         const { ctx } = this;
         try {
             this.validateUserInfo();
-            ctx.body = "注册成功";
+            const data = await ctx.service.user.createUser(ctx.request.body);
+            console.log(data);
+            ctx.success(data);
         }catch (e) {
             if (e.errors){
                 ctx.error(400,e.errors);
@@ -41,6 +43,7 @@ export default class UserController extends Controller {
             }
             case RegisterTypeEnum.Phone:{
                 ctx.validate(PhoneUserRule,data);
+                ctx.helper.verifySmsCaptcha(data.captcha);
                 break;
             }
             default:
