@@ -9,4 +9,5 @@ export default (app: Application) => {
   router.get('/phoneCode',controller.util.phoneCode);
   router.post('/register',controller.user.create);
   router.post('/login',controller.user.login);
+  router.get('/users',controller.users.index);
 };

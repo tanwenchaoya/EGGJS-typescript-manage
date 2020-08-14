@@ -20,6 +20,12 @@ export default (appInfo: EggAppInfo) => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     credentials:true
   };
+  config.middleware=['auth'];
+  config.auth = {
+    authUrls:[
+        '/users'
+    ]
+  }
   // the return config will combines to EggAppConfig
   return {
     ...config,
