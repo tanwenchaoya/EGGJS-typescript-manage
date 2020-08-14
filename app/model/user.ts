@@ -21,7 +21,7 @@ export class User extends Model<User> {
         unique:true,
         allowNull:true,
         validate:{
-            is:/^[a-zA-Z]{6,}$/
+            is:/^[a-zA-Z0-9]{6,}$/
         }
     })
     username: string;
@@ -51,7 +51,7 @@ export class User extends Model<User> {
         comment: '用户密码',
         unique:true,
         validate:{
-            is:/^[A-Za-z0-9._~!@#$^&*]{8,100}$/
+            is:/^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9.]{8,100}$/
         }
     })
     password: string;

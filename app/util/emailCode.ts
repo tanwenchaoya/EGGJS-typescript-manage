@@ -54,17 +54,11 @@ export default {
             serverCode = serviceCaptcha.code;
             serviceExprire = serviceCaptcha.expire;
         }catch (e) {
-            //不论验证成功或失败都需要重新获取验证码，只能用一次
-            ctx.session.emailCode = null;
             throw new Error("请重新获取验证码");
         }
         if (Date.now()>serviceExprire){
-            //不论验证成功或失败都需要重新获取验证码，只能用一次
-            ctx.session.emailCode = null;
             throw new Error("验证码过期");
         }else if (serverCode !== clientCode){
-            //不论验证成功或失败都需要重新获取验证码，只能用一次
-            ctx.session.emailCode = null;
             throw new Error("验证码错误");
         }
         ctx.session.emailCode = null;

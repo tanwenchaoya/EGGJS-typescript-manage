@@ -3,6 +3,7 @@ export default class UtilController extends Controller {
 
     public async createImageCode() {
         const { ctx } = this;
+        ctx.response.type = 'image/svg+xml'
         //生成验证码
         ctx.helper.createImageCaptcha();
     }

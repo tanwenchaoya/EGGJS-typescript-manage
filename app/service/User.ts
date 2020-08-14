@@ -1,6 +1,25 @@
 import { Service } from 'egg';
 
 export default class User extends Service {
+    public async getUser({username,email,phone,password}){
+        password = this.ctx.helper.generatePwd(password);
+        let res;
+        if (email){
+            res= await this.findUser({email:email, password:password});
+        }
+        else if (phone){
+            res= await this.findUser({phone:phone, password:password});
+        }else if(username){
+            res= await this.findUser({username:username, password:password});
+        }
+        try {
+            const userData = res['dataValues'];
+            delete userData.password
+            return userData;
+        }catch (e) {
+            throw new Error("用户名或密码不正确");
+        }
+    }
     public async createUser({username,email,phone,password}) {
         if (username){
             return await this.createUserByUserName(username,password);
@@ -20,7 +39,9 @@ export default class User extends Service {
             username:username,
             password:password
         })
-        return data['dataValues'];
+        const userData = data['dataValues'];
+        delete userData.password
+        return userData;
     }
     private async createUserByEmail(email,password){
         password = this.ctx.helper.generatePwd(password);
@@ -32,7 +53,9 @@ export default class User extends Service {
             email:email,
             password:password
         })
-        return data['dataValues'];
+        const userData = data['dataValues'];
+        delete userData.password
+        return userData;
     }
     private async createUserByPhone(phone,password){
         password = this.ctx.helper.generatePwd(password);
@@ -44,7 +67,9 @@ export default class User extends Service {
             phone:phone,
             password:password
         })
-        return data['dataValues'];
+        const userData = data['dataValues'];
+        delete userData.password
+        return userData;
     }
     private async findUser(options){
         const data = await this.ctx.model.User.findOne({where:options});

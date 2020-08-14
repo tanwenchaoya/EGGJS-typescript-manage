@@ -5,7 +5,7 @@ export default {
             noise:3,
             background:'#ccc',
             ignoreChars:'0oOilI',
-            width:160,
+            width:120,
             height:60
         });
         console.log(c.text);
