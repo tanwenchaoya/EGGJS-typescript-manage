@@ -1,7 +1,8 @@
 /**
  * @desc 用户表
  */
-import { AutoIncrement, Column, DataType, Model, PrimaryKey, Table ,CreatedAt,UpdatedAt} from 'sequelize-typescript';
+import { AutoIncrement, Column, DataType, Model, PrimaryKey, Table ,CreatedAt,UpdatedAt,HasMany} from 'sequelize-typescript';
+import {Oauths} from './oauths'
 @Table({
     modelName: 'user'
 })
@@ -21,7 +22,7 @@ export class User extends Model<User> {
         unique:true,
         allowNull:true,
         validate:{
-            is:/^[a-zA-Z0-9]{6,}$/
+            is:/^[a-zA-Z0-9\-]{6,}$/
         }
     })
     username: string;
@@ -55,7 +56,14 @@ export class User extends Model<User> {
         }
     })
     password: string;
-
+    @Column({
+        type:DataType.INTEGER,
+        comment: '是否三方授权',
+        unique:false
+    })
+    github: number;
+    @HasMany(() => Oauths)
+    players: Oauths[];
     @CreatedAt
     createdAt: Date;
 

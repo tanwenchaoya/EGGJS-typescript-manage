@@ -5,7 +5,8 @@ module.exports = (options,app) => {
         const authUrls = options.authUrls;
         //判断是否需要权限控制
         if (authUrls.includes(ctx.url)){
-            const token = ctx.get('authorization');
+            // const token = ctx.get('authorization');
+            const token = ctx.cookies.get('token');
             if (token){
                 try{
                     const res = await jwt.verify(token,app.config.keys);
@@ -18,7 +19,7 @@ module.exports = (options,app) => {
                 ctx.error(400,'没有权限');
             }
         }else {
-            next();
+             await next();
         }
 
     }

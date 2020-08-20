@@ -18,7 +18,12 @@ export default class UserController extends Controller {
             ctx.helper.verifyImageCaptcha(data.captcha);
             const res = await ctx.service.user.getUser(ctx.request.body);
             const token = jwt.sign(res, this.app.config.keys);
-            res.token = token
+            // res.token = token
+            ctx.cookies.set('token',token,{
+                path:'/',
+                maxAge: 24 * 60 * 60 * 1000,
+                httpOnly: false
+            })
             ctx.success(res);
         }catch (e) {
             if (e.errors){

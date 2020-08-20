@@ -2,7 +2,7 @@ import { Service } from 'egg';
 
 export default class User extends Service {
     public async getUser({username,email,phone,password}){
-        password = this.ctx.helper.generatePwd(password);
+        password = await this.ctx.helper.generatePwd(password);
         let res;
         if (email){
             res= await this.findUser({email:email, password:password});
@@ -20,53 +20,44 @@ export default class User extends Service {
             throw new Error("用户名或密码不正确");
         }
     }
-    public async createUser({username,email,phone,password}) {
+    public async createUser(obj) {
+        const {username,email,phone,password} = obj
+        obj.password = await this.ctx.helper.generatePwd(password);
+        console.log(obj);
         if (username){
-            return await this.createUserByUserName(username,password);
+            return await this.createUserByUserName(username,obj);
         }else if(email){
-            return await this.createUserByEmail(email,password);
+            return await this.createUserByEmail(email,obj);
         }else if (phone){
-            return await this.createUserByPhone(phone,password);
+            return await this.createUserByPhone(phone,obj);
         }
     }
-    private async createUserByUserName(username,password){
-        password = this.ctx.helper.generatePwd(password);
+    private async createUserByUserName(username,obj){
         const res = await this.findUser({username:username});
         if (res){
             throw new Error("用户已存在");
         }
-        const data = await this.ctx.model.User.create({
-            username:username,
-            password:password
-        })
+        const data = await this.ctx.model.User.create(obj)
         const userData = data['dataValues'];
         delete userData.password
         return userData;
     }
-    private async createUserByEmail(email,password){
-        password = this.ctx.helper.generatePwd(password);
+    private async createUserByEmail(email,obj){
         const res = await this.findUser({email:email});
         if (res){
             throw new Error("用户已存在");
         }
-        const data = await this.ctx.model.User.create({
-            email:email,
-            password:password
-        })
+        const data = await this.ctx.model.User.create(obj)
         const userData = data['dataValues'];
         delete userData.password
         return userData;
     }
-    private async createUserByPhone(phone,password){
-        password = this.ctx.helper.generatePwd(password);
+    private async createUserByPhone(phone,obj){
         const res = await this.findUser({phone:phone});
         if (res){
             throw new Error("用户已存在");
         }
-        const data = await this.ctx.model.User.create({
-            phone:phone,
-            password:password
-        })
+        const data = await this.ctx.model.User.create(obj)
         const userData = data['dataValues'];
         delete userData.password
         return userData;
