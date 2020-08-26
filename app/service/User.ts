@@ -23,7 +23,6 @@ export default class User extends Service {
     public async createUser(obj) {
         const {username,email,phone,password} = obj
         obj.password = await this.ctx.helper.generatePwd(password);
-        console.log(obj);
         if (username){
             return await this.createUserByUserName(username,obj);
         }else if(email){

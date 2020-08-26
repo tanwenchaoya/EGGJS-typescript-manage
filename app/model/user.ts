@@ -57,11 +57,25 @@ export class User extends Model<User> {
     })
     password: string;
     @Column({
-        type:DataType.INTEGER,
+        type:DataType.BOOLEAN,
         comment: '是否三方授权',
         unique:false
     })
     github: number;
+
+    @Column({
+        type:DataType.BOOLEAN,
+        comment: '是否注销',
+        unique:false
+    })
+    userState: boolean;
+
+    @Column({
+        type:DataType.STRING,
+        comment: '用户头像',
+        unique:false
+    })
+    avatarUrl: string;
     @HasMany(() => Oauths)
     players: Oauths[];
     @CreatedAt

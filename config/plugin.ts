@@ -10,26 +10,26 @@ const plugin: EggPlugin = {
         enable: true,
         package: 'egg-sequelize',
     }*/
-    sequelize : {
-        enable: true,
-        package: 'egg-sequelize-ts'
-    },
-    validate : {
-        enable: true,
-        package: 'egg-validate',
-    },
-    sessionRedis : {
-        enable: true,
-        package: 'egg-session-redis',
-    },
-    redis :{
-        enable: true,
-        package: 'egg-redis',
-    },
-    cors :{
-        enable: true,
-        package: 'egg-cors',
-    }
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize-ts',
+  },
+  validate: {
+    enable: true,
+    package: 'egg-validate',
+  },
+  sessionRedis: {
+    enable: true,
+    package: 'egg-session-redis',
+  },
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
 };
 
 export default plugin;
