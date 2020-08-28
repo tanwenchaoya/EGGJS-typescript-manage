@@ -20,12 +20,20 @@ export default (appInfo: EggAppInfo) => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     credentials:true
   };
+  //中间件授权
   config.middleware=['auth'];
   config.auth = {
     authUrls:[
         '/users'
     ]
   }
+  config.multipart = {
+    mode: 'file',
+    fileSize:'10mb',
+    fileExtensions:[
+        '.xls'
+    ]
+  };
   // the return config will combines to EggAppConfig
   return {
     ...config,

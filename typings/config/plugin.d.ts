@@ -14,14 +14,11 @@ import 'egg-schedule';
 import 'egg-static';
 import 'egg-jsonp';
 import 'egg-view';
-<<<<<<< HEAD
-=======
 import 'egg-sequelize-ts';
 import 'egg-validate';
 import 'egg-session-redis';
 import 'egg-redis';
 import 'egg-cors';
->>>>>>> login
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -37,13 +34,10 @@ declare module 'egg' {
     static?: EggPluginItem;
     jsonp?: EggPluginItem;
     view?: EggPluginItem;
-<<<<<<< HEAD
-=======
     sequelize?: EggPluginItem;
     validate?: EggPluginItem;
     sessionRedis?: EggPluginItem;
     redis?: EggPluginItem;
     cors?: EggPluginItem;
->>>>>>> login
   }
 }

@@ -17,6 +17,10 @@ export default class UserController extends Controller {
             this.validateUserInfo()
             ctx.helper.verifyImageCaptcha(data.captcha);
             const res = await ctx.service.user.getUser(ctx.request.body);
+            //校验用户是否可用
+            if(!res.userState){
+                ctx.error(400,'用户已注销');
+            }
             const token = jwt.sign(res, this.app.config.keys);
             // res.token = token
             ctx.cookies.set('token',token,{

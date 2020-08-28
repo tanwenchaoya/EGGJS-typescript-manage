@@ -69,13 +69,29 @@ export class User extends Model<User> {
         unique:false
     })
     userState: boolean;
-
+    @Column({
+        type:DataType.BOOLEAN,
+        comment: '是否本地注册',
+        unique:false
+    })
+    local: boolean;
     @Column({
         type:DataType.STRING,
         comment: '用户头像',
-        unique:false
+        unique:false,
+        /*get(){
+            const value = this.getDataValue('avatarUrl');
+            return value?"http://127.0.0.1:7001"+value:'';
+        }*/
     })
     avatarUrl: string;
+    @Column({
+        type:DataType.VIRTUAL,
+        get(){
+            return "http://127.0.0.1:7001";
+        }
+    })
+    baseUrl: string;
     @HasMany(() => Oauths)
     players: Oauths[];
     @CreatedAt
