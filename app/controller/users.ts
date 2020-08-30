@@ -19,7 +19,6 @@ export default class UsersController extends Controller {
     public async createUser(){
         const {ctx} = this;
         const data = ctx.request.body;
-        console.log(data);
         try{
             ctx.validate(addUserRules,data);
             const res = await ctx.service.users.createUser(data);

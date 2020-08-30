@@ -1,8 +1,21 @@
 /**
  * @desc 用户表
  */
-import { AutoIncrement, Column, DataType, Model, PrimaryKey, Table ,CreatedAt,UpdatedAt,HasMany} from 'sequelize-typescript';
+import {
+    AutoIncrement,
+    Column,
+    DataType,
+    Model,
+    PrimaryKey,
+    Table,
+    CreatedAt,
+    UpdatedAt,
+    HasMany,
+    BelongsToMany
+} from 'sequelize-typescript';
 import {Oauths} from './oauths'
+import {Roles} from "./roles";
+import {UserRole} from "./userRole";
 @Table({
     modelName: 'user'
 })
@@ -30,8 +43,8 @@ export class User extends Model<User> {
     @Column({
         type:DataType.STRING,
         comment: '用户邮箱',
-        unique:true,
         allowNull:true,
+        unique:true,
         validate:{
             isEmail:true
         }
@@ -40,8 +53,8 @@ export class User extends Model<User> {
     @Column({
         type:DataType.STRING,
         comment: '用户手机',
-        unique:true,
         allowNull:true,
+        unique:true,
         validate:{
             is:/^1[345678]\d{9}$/
         }
@@ -50,7 +63,8 @@ export class User extends Model<User> {
     @Column({
         type:DataType.STRING,
         comment: '用户密码',
-        unique:true,
+        unique:false,
+        allowNull:true,
         validate:{
             is:/^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9.]{8,100}$/
         }
@@ -92,8 +106,11 @@ export class User extends Model<User> {
         }
     })
     baseUrl: string;
+
     @HasMany(() => Oauths)
     players: Oauths[];
+    @BelongsToMany(() => Roles,()=>UserRole)
+    roles: Roles[];
     @CreatedAt
     createdAt: Date;
 
