@@ -53,13 +53,11 @@ export default class giController extends Controller {
         data.provider = 'github';
         console.log(data);
         await this.getReleUser(data,accessToken)
-
     }
     //获取到数据后来进行对表的操作
     private async getReleUser(data,accessToken){
         const {ctx} = this;
         try{
-
             const res = await ctx.service.oauth.getUser(data);
             const token = jwt.sign(res, this.app.config.keys);
             ctx.cookies.set('token',token,{

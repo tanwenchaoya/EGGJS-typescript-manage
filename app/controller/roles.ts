@@ -1,14 +1,24 @@
 import { Controller } from 'egg';
-export default class UsersController extends Controller {
+export default class RolesController extends Controller {
     public async index() {
         const {ctx} = this;
         console.log(ctx.query);
         try{
             if (Object.keys(ctx.query).length !== 0){
                 const res = await ctx.service.roles.getRolesList(ctx.query);
+                res.roles.forEach((role:any)=>{
+                    role.dataValues.rightsTree = role.dataValues.Rights.filter((outItem)=>{
+                        role.dataValues.Rights.forEach((inItem)=>{
+                            if(outItem.dataValues.id === inItem.dataValues.pid){
+                                outItem.dataValues.children ? '' : outItem.dataValues.children = [];
+                                outItem.dataValues.children.push(inItem);
+                            }
+                        });
+                        if(outItem.dataValues.level === 0) return true;
+                    });
+                })
                 ctx.success(res);
             }else {
-                console.log("11111111");
                 const res = await ctx.service.roles.getAllRoles();
                 ctx.success(res);
             }

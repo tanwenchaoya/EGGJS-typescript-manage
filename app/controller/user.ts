@@ -21,13 +21,18 @@ export default class UserController extends Controller {
             if(!res.userState){
                 ctx.error(400,'用户已注销');
             }
-            const token = jwt.sign(res, this.app.config.keys);
+            const obj:any = {};
+            obj.username = res.username;
+            obj.email = res.email;
+            obj.phone = res.phone;
+            const token = jwt.sign(obj, this.app.config.keys);
             // res.token = token
             ctx.cookies.set('token',token,{
                 path:'/',
                 maxAge: 24 * 60 * 60 * 1000,
                 httpOnly: false
             })
+            ctx.session.user = res;
             ctx.success(res);
         }catch (e) {
             if (e.errors){

@@ -1,5 +1,6 @@
 import { Service } from 'egg';
 const {Op} = require('sequelize');
+import {Rights} from "../model/rights";
 export default class Users extends Service {
 
     /**
@@ -23,7 +24,8 @@ export default class Users extends Service {
             const roles = await this.ctx.model.Roles.findAll({
                 limit:pageSize,
                 offset:(currentPage-1)*pageSize,
-                where:defaultCondition
+                where:defaultCondition,
+                include:[{model:Rights}]
             })
             const total = await this.ctx.model.Roles.findAndCountAll({
                 where:defaultCondition
@@ -32,7 +34,8 @@ export default class Users extends Service {
         }else {
             const roles = await this.ctx.model.Roles.findAll({
                 limit:pageSize,
-                offset:(currentPage-1)*pageSize
+                offset:(currentPage-1)*pageSize,
+                include:[{model:Rights}]
             })
             const total = await this.ctx.model.Roles.findAndCountAll();
             return {roles:roles,total:total}

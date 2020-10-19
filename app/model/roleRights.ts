@@ -3,7 +3,7 @@
  */
 import { Column, DataType, Model, Table, CreatedAt, UpdatedAt, ForeignKey} from 'sequelize-typescript';
 import {Rights} from './rights'
-import {Role} from './role'
+import {Roles} from './roles'
 
 @Table
 export class RoleRights extends Model<RoleRights> {
@@ -18,7 +18,7 @@ export class RoleRights extends Model<RoleRights> {
     })
     id: number;
 
-    @ForeignKey(()=>Role)
+    @ForeignKey(()=>Roles)
     @Column({
         field:'role_id',
         type: DataType.INTEGER,

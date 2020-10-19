@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 
 export default class Rights extends Service {
 
-    public async getAllRights(){
+    public async getAllRightsList(){
         const rights = await this.ctx.model.Rights.findAll({
             attributes:{
                 exclude:['createdAt', 'updatedAt']

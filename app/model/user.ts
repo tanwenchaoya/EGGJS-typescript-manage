@@ -99,6 +99,7 @@ export class User extends Model<User> {
         }*/
     })
     avatarUrl: string;
+    //需要注意的是虚拟字段不会出现在datavalues里面
     @Column({
         type:DataType.VIRTUAL,
         get(){

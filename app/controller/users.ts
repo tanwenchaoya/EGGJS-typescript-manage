@@ -87,7 +87,6 @@ export default class UsersController extends Controller {
             const xlsxRes = xlxs.parse(fs.readFileSync(file.filepath));
             const data = xlsxRes.length >0?xlsxRes[0]:null;
             const usersData = data?data.data:[];
-            console.log(usersData);
             const colTitle = usersData[0];
             let users:Array<any> = [];
             transaction = await ctx.model.transaction();
@@ -100,7 +99,6 @@ export default class UsersController extends Controller {
                     }
                     user[colTitle[j]] = colValue[j];
                 }
-                console.log(user);
                 await ctx.service.users.createUser(user);
                 users.push(user);
             }
